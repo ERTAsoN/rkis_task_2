@@ -1,0 +1,5 @@
+form > p {
+    display: flex;
+    justify-content: end;
+    width: 40%;
+}
