@@ -17,13 +17,14 @@
       <div class="row">
           <div class="col-sm-2">
               {% block sidebar %}
-              <ul class="sidebar-nav">
+              <ul class="sidebar-nav h5">
                   <li><a href="{% url 'index' %}">Главная</a></li>
                   {% if user.is_authenticated %}
-                    <li>Аккаунт: <span class="text-secondary">{{ user.get_username }}</span></li>
+                    <li class="mt-4">Аккаунт: <span class="text-secondary">{{ user.get_username }}</span></li>
                     <li><a href="{% url 'logout'%}">Выйти</a></li>
                   {% else %}
-                    <li><a href="{% url 'login'%}">Войти</a></li>
+                    <li class="mt-4"><a href="{% url 'login'%}">Войти</a></li>
+                    <li><a href="{% url 'register'%}">Регистрация</a></li>
                   {% endif %}
               </ul>
               {% endblock %}

@@ -3,3 +3,8 @@ form > p {
     justify-content: end;
     width: 40%;
 }
+
+.sidebar-nav > li {
+    list-style-type: none;
+    margin: 10px;
+}
