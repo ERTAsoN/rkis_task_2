@@ -11,6 +11,7 @@ class RegistrationForm(forms.ModelForm):
     patronymic = forms.CharField(max_length=200, label='Отчество (если есть)',  widget=forms.TextInput())
     password = forms.CharField(required=True, max_length=200, label='Пароль', widget=forms.PasswordInput)
     password_confirm = forms.CharField(required=True, max_length=200, label='Подтверждение пароля', widget=forms.PasswordInput)
+    consent = forms.BooleanField(required=True, label='Согласие на обработку персональных данных', widget=forms.CheckboxInput())
 
     class Meta:
         model = User
