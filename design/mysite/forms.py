@@ -14,7 +14,7 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name', 'patronymic', 'password']
+        fields = ['username', 'email', 'last_name', 'first_name', 'patronymic', 'password']
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -28,16 +28,19 @@ class RegistrationForm(forms.ModelForm):
         first_name = self.cleaned_data.get('first_name')
         if not re.match(r'^[а-яА-ЯёЁ\s-]+$', first_name):
             raise ValidationError('ФИО должно содержать только кириллицу, пробелы и дефисы.')
+        return first_name
 
     def clean_last_name(self):
         last_name = self.cleaned_data.get('last_name')
         if not re.match(r'^[а-яА-ЯёЁ\s-]+$', last_name):
             raise ValidationError('ФИО должно содержать только кириллицу, пробелы и дефисы.')
+        return last_name
 
-    def clean_patronymic_name(self):
+    def clean_patronymic(self):
         patronymic = self.cleaned_data.get('patronymic')
         if not re.match(r'^[а-яА-ЯёЁ\s-]+$', patronymic):
             raise ValidationError('ФИО должно содержать только кириллицу, пробелы и дефисы.')
+        return patronymic
 
     def clean(self):
         cleaned_data = super().clean()

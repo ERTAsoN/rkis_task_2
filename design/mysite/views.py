@@ -1,11 +1,11 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout, login
 from django.shortcuts import render, redirect
 from .forms import RegistrationForm, LoginForm
 
 def index(request):
     return render(request, 'index.html')
 
-def login(request):
+def login_user(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -32,3 +32,7 @@ def register(request):
     else:
         form = RegistrationForm()
     return render(request, 'registration/register.html', {'form': form})
+
+def logout_user(request):
+    logout(request)
+    return render(request, 'registration/logout.html')
