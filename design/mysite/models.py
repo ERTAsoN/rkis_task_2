@@ -9,6 +9,7 @@ class User(AbstractUser):
     patronymic = models.CharField(max_length=200, verbose_name='Отчество')
     email = models.EmailField(max_length=200, verbose_name='Email', unique=True)
     password = models.CharField(max_length=200, verbose_name='Пароль')
+    phone = models.CharField(max_length=20, verbose_name='Телефон', default='0000000000')
 
     USERNAME_FIELD = 'username'
 
