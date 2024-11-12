@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, logout, login
 from django.shortcuts import render, redirect
-from .forms import RegistrationForm, LoginForm
+from .forms import RegistrationForm, LoginForm, CreateApplicationForm
+
 
 def index(request):
     return render(request, 'index.html')
@@ -36,3 +37,18 @@ def register(request):
 def logout_user(request):
     logout(request)
     return render(request, 'registration/logout.html')
+
+def create_application(request):
+    if request.method == 'POST':
+        form = CreateApplicationForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('app_created')
+        else:
+            print(form.errors)
+    else:
+        form = CreateApplicationForm()
+    return render(request, 'create_application.html', {'form': form})
+
+def app_created(request):
+    return render(request, 'app_created.html')

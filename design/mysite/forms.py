@@ -1,17 +1,21 @@
+from cProfile import label
+
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import User
+from django.core.validators import FileExtensionValidator
+
+from .models import User, DesignApplication
 import re
 
 class RegistrationForm(forms.ModelForm):
-    username = forms.CharField(required=True, max_length=200, label='Имя пользователя', widget=forms.TextInput())
-    email = forms.CharField(required=True, max_length=200, label='Email', widget=forms.TextInput())
-    phone = forms.CharField(required=True, max_length=20, label='Телефон', widget=forms.TextInput())
-    last_name = forms.CharField(required=True, max_length=200, label='Фамилия', widget=forms.TextInput())
-    first_name = forms.CharField(required=True, max_length=200, label='Имя', widget=forms.TextInput())
-    patronymic = forms.CharField(max_length=200, label='Отчество (если есть)',  widget=forms.TextInput())
-    password = forms.CharField(required=True, max_length=200, label='Пароль', widget=forms.PasswordInput)
-    password_confirm = forms.CharField(required=True, max_length=200, label='Подтверждение пароля', widget=forms.PasswordInput)
+    username = forms.CharField(required=True, max_length=200, label='', widget=forms.TextInput(attrs={'placeholder': 'Имя пользователя'}))
+    email = forms.CharField(required=True, max_length=200, label='', widget=forms.TextInput(attrs={'placeholder': 'Email'}))
+    phone = forms.CharField(required=True, max_length=20, label='', widget=forms.TextInput(attrs={'placeholder': 'Телефон'}))
+    last_name = forms.CharField(required=True, max_length=200, label='', widget=forms.TextInput(attrs={'placeholder': 'Фамилия'}))
+    first_name = forms.CharField(required=True, max_length=200, label='', widget=forms.TextInput(attrs={'placeholder': 'Имя'}))
+    patronymic = forms.CharField(required=False, max_length=200, label='', widget=forms.TextInput(attrs={'placeholder': 'Отчество (если есть)'}))
+    password = forms.CharField(required=True, max_length=200, label='', widget=forms.PasswordInput(attrs={'placeholder': 'Пароль'}))
+    password_confirm = forms.CharField(required=True, max_length=200, label='', widget=forms.PasswordInput(attrs={'placeholder': 'Подтверждение пароля'}))
     consent = forms.BooleanField(required=True, label='Согласие на обработку персональных данных', widget=forms.CheckboxInput())
 
     class Meta:
@@ -59,5 +63,31 @@ class RegistrationForm(forms.ModelForm):
         return user
 
 class LoginForm(forms.Form):
-    username = forms.CharField(required=True, max_length=200)
-    password = forms.CharField(required=True, max_length=200, widget=forms.PasswordInput)
+    username = forms.CharField(required=True, max_length=200, label='', widget=forms.TextInput(attrs={'placeholder': 'Имя пользователя'}))
+    password = forms.CharField(required=True, max_length=200, label='', widget=forms.PasswordInput(attrs={'placeholder': 'Пароль'}))
+
+class CreateApplicationForm(forms.ModelForm):
+    title = forms.CharField(required=True, max_length=200, label='', widget=forms.TextInput(attrs={'placeholder': 'Название'}))
+    description = forms.CharField(required=True, max_length=200, label='', widget=forms.Textarea(attrs={'placeholder': 'Описание'}))
+    photo = forms.FileField(required=True, label='Фото помещения', validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'bmp'])])
+    category = forms.ChoiceField(required=True, label='Категория', choices=DesignApplication.CATEGORY)
+
+    class Meta:
+        model = DesignApplication
+        fields = ['title', 'description', 'category', 'photo']
+
+    def clean_photo(self):
+        photo = self.cleaned_data.get('photo')
+        if photo.size > 1024*1024*2:
+            raise ValidationError('Файл слишком большой. Размер не должен превышать 2 МБ.')
+        return photo
+
+    def clean(self):
+        cleaned_data = super().clean()
+        return cleaned_data
+
+    def save(self, commit=True):
+        app = super().save(commit=False)
+        if commit:
+            app.save()
+        return app
