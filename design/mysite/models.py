@@ -17,6 +17,7 @@ class User(AbstractUser):
         return self.username
 
 class DesignApplication(models.Model):
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Создатель')
     title = models.CharField(max_length=200, verbose_name='Название')
     description = models.TextField(max_length=2000, verbose_name='Описание')
     photo = models.FileField(verbose_name='Фото помещения')
@@ -44,3 +45,6 @@ class DesignApplication(models.Model):
 
     def __str__(self):
         return self.title
+
+    def time_created_f(self):
+        return self.time_created

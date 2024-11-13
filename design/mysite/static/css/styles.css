@@ -18,9 +18,10 @@ form > p > select {
 }
 
 form > p > input[type=text], input[type=password], textarea {
-    padding: 3px;
+    padding: 5px;
     border-radius: 5px;
-    border: 2px solid gray;
+    border: none;
+    background-color: #dadada;
 }
 
 #id_consent {
@@ -30,4 +31,132 @@ form > p > input[type=text], input[type=password], textarea {
 
 h3 {
     margin-bottom: 20px;
+}
+
+.errorlist {
+    color: #ff5732;
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.app-display {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    gap: 10px;
+}
+
+.app-display-card {
+    width: 300px;
+    height: 505px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.app-display-img {
+    width: 280px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 5px 5px 0 0;
+}
+
+button, .button {
+    border: none;
+    border-radius: 5px;
+    background-color: dodgerblue;
+    color: white;
+    padding: 5px 10px 5px 10px;
+    font-weight: bold;
+}
+
+.app-desc {
+    height: 50px;
+    overflow: hidden;
+    white-space: normal;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+
+.app-display-category {
+    padding: 5px;
+    border-radius: 3px;
+    display: inline;
+    background-color: plum;
+}
+
+.delete-button {
+    text-align: center;
+    background-color: gray;
+    transition-duration: 0.2s;
+}
+
+.delete-button:hover {
+    text-decoration: none;
+    color: white;
+    background-color: #dc3545;
+    transition-duration: 0.2s;
+}
+
+.delete-button-inactive {
+    text-align: center;
+    background-color: #dfdfdf;
+}
+
+.app-status {
+    font-weight: bold;
+    padding: 5px;
+    text-align: center;
+    border-radius: 0 0 5px 5px;
+}
+
+.bg-lightblue {
+    background-color: cornflowerblue;
+}
+
+.bg-yellow {
+    background-color: #ffbd2e;
+}
+
+.bg-green {
+    background-color: #8ada40;
+}
+
+.category-l { /*Жилые помещения*/
+    background-color: #ffa500;
+}
+
+.category-c { /*Коммерческие помещения*/
+    background-color: darkslategrey;
+}
+
+.category-h { /*Отели и гостиницы*/
+    background-color: cornflowerblue;
+}
+
+.category-b { /*Бары и клубы*/
+    background-color: blueviolet;
+}
+
+.category-s { /*Спа-салоны и салоны красоты*/
+    background-color: plum;
+}
+
+.category-m { /*Медицинские учреждения*/
+    background-color: #dc3545;
+}
+
+.category-o { /*Общественные здания*/
+    background-color: #653e20;
+}
+
+.category-g { /*Cадовые домики и загородные дома*/
+    background-color: green;
 }

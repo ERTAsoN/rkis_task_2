@@ -86,8 +86,14 @@ class CreateApplicationForm(forms.ModelForm):
         cleaned_data = super().clean()
         return cleaned_data
 
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)  # Получаем пользователя из kwargs
+        super().__init__(*args, **kwargs)
+
     def save(self, commit=True):
         app = super().save(commit=False)
+        if self.user:  # Устанавливаем текущего пользователя в поле creator
+            app.creator = self.user
         if commit:
             app.save()
         return app
