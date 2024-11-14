@@ -3,8 +3,9 @@ from cProfile import label
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
+from django.shortcuts import get_object_or_404
 
-from .models import User, DesignApplication
+from .models import User, DesignApplication, Category
 import re
 
 class RegistrationForm(forms.ModelForm):
@@ -70,7 +71,6 @@ class CreateApplicationForm(forms.ModelForm):
     title = forms.CharField(required=True, max_length=200, label='', widget=forms.TextInput(attrs={'placeholder': 'Название'}))
     description = forms.CharField(required=True, max_length=200, label='', widget=forms.Textarea(attrs={'placeholder': 'Описание'}))
     photo = forms.FileField(required=True, label='Фото помещения', validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'bmp'])])
-    category = forms.ChoiceField(required=True, label='Категория', choices=DesignApplication.CATEGORY)
 
     class Meta:
         model = DesignApplication
@@ -87,13 +87,14 @@ class CreateApplicationForm(forms.ModelForm):
         return cleaned_data
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)  # Получаем пользователя из kwargs
+        self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
 
     def save(self, commit=True):
         app = super().save(commit=False)
-        if self.user:  # Устанавливаем текущего пользователя в поле creator
+        if self.user:
             app.creator = self.user
+
         if commit:
             app.save()
         return app

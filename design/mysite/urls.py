@@ -1,12 +1,13 @@
-from django.urls import path, include
-from .views import register, index, logout_user, login_user, create_application, app_created, AppListView
+from django.urls import path
+
+from .views import register, logout_user, login_user, create_application, AccountListView, HomepageListView, AppDelete
 
 urlpatterns = [
-    path('', index, name='index'),
+    path('', HomepageListView.as_view(), name='index'),
     path('register/', register, name='register'),
     path('logout/', logout_user, name='logout'),
     path('login/', login_user, name='login'),
     path('create/', create_application, name='create_app'),
-    path('app-created/', app_created, name='app_created'),
-    path('account/', AppListView.as_view(), name='account'),
+    path('account/', AccountListView.as_view(), name='account'),
+    path('app/<int:pk>/delete/', AppDelete.as_view(), name='app_delete'),
 ]
