@@ -12,7 +12,8 @@
                     <div>
                         <p class="mb-2 h5 text-center">{{app.title}}</p>
                         <p class="text-secondary mt-1 mb-1">{{ app.time_created_f }}</p>
-                        <p class="text-white mb-0 app-display-category text-truncate">{{ app.category }}</p>
+                        <p class="text-white mb-0 app-display-category text-truncate">{{ app.get_categories }}</p>
+                        <p class="text-white mb-0 app-display-price">{{ app.get_price }} ₽</p>
                         <p class="text-secondary mt-1 mb-1 app-desc">{{ app.description }}</p>
                     </div>
                     {% if app.photo %}

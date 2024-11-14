@@ -14,7 +14,7 @@
                     <div>
                         <p class="mb-2 h5 text-center">{{app.title}}</p>
                         <p class="text-secondary mt-1 mb-1">{{ app.time_created_f }}</p>
-                        <p class="text-white mb-1 app-display-category text-truncate">{{ app.category }}</p>
+                        <p class="text-white mb-1 app-display-category text-truncate">{{ app.get_category }}</p>
                     </div>
                     {% if app.photo %}
                         <img src="{{ app.photo.url }}" alt="{{ app.title }}" class="app-display-img app-display-img-index"/>

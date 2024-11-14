@@ -1,14 +1,13 @@
-from lib2to3.fixes.fix_input import context
-
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.views import generic
 from django.views.generic import DeleteView
 
 from .forms import RegistrationForm, LoginForm, CreateApplicationForm
 from .models import DesignApplication
-from django.views import generic
+
 
 def login_user(request):
     if request.method == 'POST':

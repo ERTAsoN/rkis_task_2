@@ -39,6 +39,10 @@ label[for="id_consent"] {
     height: 17px;
 }
 
+#id_category {
+    list-style-type: none;
+}
+
 h3 {
     margin-bottom: 20px;
 }
@@ -59,7 +63,7 @@ h3 {
 
 .app-display-card {
     width: 300px;
-    height: 515px;
+    height: 555px;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
     padding: 10px;
@@ -102,12 +106,21 @@ button, .button {
     -webkit-line-clamp: 2;
 }
 
-
 .app-display-category {
     padding: 5px;
     border-radius: 3px;
     display: inline-block;
     background-color: plum;
+    width: 100%;
+    height: 30px;
+    font-weight: bold;
+}
+
+.app-display-price {
+    padding: 5px;
+    border-radius: 3px;
+    display: inline-block;
+    background-color: #ffbd2e;
     width: 100%;
     height: 30px;
     font-weight: bold;

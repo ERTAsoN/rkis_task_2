@@ -75,6 +75,7 @@ class CreateApplicationForm(forms.ModelForm):
     class Meta:
         model = DesignApplication
         fields = ['title', 'description', 'category', 'photo']
+        widgets = {'category':  forms.CheckboxSelectMultiple()}
 
     def clean_photo(self):
         photo = self.cleaned_data.get('photo')
@@ -97,4 +98,5 @@ class CreateApplicationForm(forms.ModelForm):
 
         if commit:
             app.save()
+            self.save_m2m()
         return app
