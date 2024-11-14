@@ -39,6 +39,11 @@ class DesignApplication(models.Model):
 
     status = models.CharField(max_length=1, verbose_name='Статус заявки', choices=APP_STATUS, blank=True, default='n')
 
+    class Meta:
+        permissions = [
+            ('can_edit_status', 'Can edit application status')
+        ]
+
     def __str__(self):
         return self.title
 

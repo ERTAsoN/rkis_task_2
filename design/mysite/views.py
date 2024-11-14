@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, logout, login
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import permission_required, login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
@@ -41,7 +42,7 @@ def logout_user(request):
     logout(request)
     return render(request, 'registration/logout.html')
 
-
+@login_required
 def create_application(request):
     if request.method == 'POST':
         form = CreateApplicationForm(request.POST, request.FILES, user=request.user)
@@ -73,10 +74,20 @@ class HomepageListView(generic.ListView):
         context['apps_in_process'] = DesignApplication.objects.filter(status='w').count()
         return context
 
-class AppDelete(DeleteView):
+class AllAppsListView(generic.ListView):
+    model = DesignApplication
+    template_name = 'all_apps.html'
+
+    def get_queryset(self):
+        return DesignApplication.objects.all().order_by('-time_created')
+
+class AppDelete(DeleteView, LoginRequiredMixin):
     model = DesignApplication
     success_url = reverse_lazy('account')
     template_name = 'delete_app.html'
 
     def get_queryset(self):
         return super().get_queryset()
+
+class EditAppStatus(PermissionRequiredMixin):
+    permission_required = 'mysite.can_edit_status'
