@@ -30,6 +30,8 @@ class DesignApplication(models.Model):
     photo = models.FileField(verbose_name='Фото помещения')
     time_created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     category = models.ManyToManyField(Category, null=False, verbose_name='Категория')
+    discount = models.IntegerField(verbose_name='Скидка', default=0)
+    payment_confirmed = models.BooleanField(verbose_name='Оплата произведена', default=False)
 
     design_comment = models.TextField(max_length=1000, verbose_name='Комментарий', default='')
     design_photo = models.FileField(verbose_name='Изображение дизайна', blank=True)
@@ -63,4 +65,4 @@ class DesignApplication(models.Model):
 
     def get_price(self):
         categories = self.category.all()
-        return sum(category.price for category in categories)
+        return int(sum(category.price for category in categories) * (100 - self.discount) / 100)

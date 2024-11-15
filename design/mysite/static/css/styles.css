@@ -150,6 +150,15 @@ h3 {
     display: inline-block;
 }
 
+p:has(#id_discount) {
+    display: inline;
+}
+
+p:has(#id_discount)::after {
+    content: "%";
+    display: inline;
+}
+
 .bg-lightblue {
     background-color: cornflowerblue;
 }

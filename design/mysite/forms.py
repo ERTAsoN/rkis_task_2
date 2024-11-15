@@ -106,6 +106,7 @@ class CreateApplicationForm(forms.ModelForm):
 class EditAppForm(forms.ModelForm):
     design_comment = forms.CharField(required=False, max_length=200, label='', widget=forms.Textarea(attrs={'placeholder': 'Комментарий'}))
     design_photo = forms.FileField(required=False, label='Изображение дизайна', validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'bmp'])])
+    discount = forms.IntegerField(min_value=0, max_value=100, label='Скидка')
 
     class Meta:
         model = DesignApplication
