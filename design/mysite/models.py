@@ -31,13 +31,16 @@ class DesignApplication(models.Model):
     time_created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     category = models.ManyToManyField(Category, null=False, verbose_name='Категория')
 
+    design_comment = models.TextField(max_length=1000, verbose_name='Комментарий', default='')
+    design_photo = models.FileField(verbose_name='Изображение дизайна', blank=True)
+
     APP_STATUS = (
         ('n', 'Новая'),
         ('w', 'Принято в работу'),
         ('d', 'Выполнена'),
     )
 
-    status = models.CharField(max_length=1, verbose_name='Статус заявки', choices=APP_STATUS, blank=True, default='n')
+    status = models.CharField(max_length=1, verbose_name='Статус заявки', choices=APP_STATUS, null=False, default='n')
 
     class Meta:
         permissions = [

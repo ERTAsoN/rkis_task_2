@@ -1,12 +1,15 @@
+from unicodedata import category
+
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
-from django.views.generic import DeleteView
+from django.views.generic import DeleteView, UpdateView
 
-from .forms import RegistrationForm, LoginForm, CreateApplicationForm
+from django import forms
+from .forms import RegistrationForm, LoginForm, CreateApplicationForm, EditAppForm, AppFilterForm
 from .models import DesignApplication
 
 
@@ -60,7 +63,18 @@ class AccountListView(LoginRequiredMixin, generic.ListView):
     template_name = 'account.html'
 
     def get_queryset(self):
-        return DesignApplication.objects.filter(creator=self.request.user).order_by('-time_created')
+        queryset = super().get_queryset()
+        status = self.request.GET.get('status')
+
+        if status:
+            queryset = queryset.filter(status=status).order_by('-time_created')
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter_form'] = AppFilterForm(self.request.GET or None)
+        return context
 
 class HomepageListView(generic.ListView):
     model = DesignApplication
@@ -74,7 +88,8 @@ class HomepageListView(generic.ListView):
         context['apps_in_process'] = DesignApplication.objects.filter(status='w').count()
         return context
 
-class AllAppsListView(generic.ListView):
+class AllAppsListView(generic.ListView, PermissionRequiredMixin):
+    permission_required = 'mysite.can_edit_status'
     model = DesignApplication
     template_name = 'all_apps.html'
 
@@ -89,5 +104,10 @@ class AppDelete(DeleteView, LoginRequiredMixin):
     def get_queryset(self):
         return super().get_queryset()
 
-class EditAppStatus(PermissionRequiredMixin):
+class EditApp(UpdateView, PermissionRequiredMixin):
     permission_required = 'mysite.can_edit_status'
+    model = DesignApplication
+    template_name = 'edit_app.html'
+    form_class = EditAppForm
+
+    success_url = reverse_lazy('all_apps')

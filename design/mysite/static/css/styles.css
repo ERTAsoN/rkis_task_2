@@ -76,6 +76,10 @@ h3 {
     height: 370px;
 }
 
+.app-display-card-edit {
+    height: 410px;
+}
+
 .app-display-img {
     width: 280px;
     height: 250px;
@@ -85,15 +89,6 @@ h3 {
 
 .app-display-img-index {
     border-radius: 5px;
-}
-
-button, .button {
-    border: none;
-    border-radius: 5px;
-    background-color: dodgerblue;
-    color: white;
-    padding: 5px 10px 5px 10px;
-    font-weight: bold;
 }
 
 .app-desc {
@@ -149,6 +144,10 @@ button, .button {
     padding: 5px;
     text-align: center;
     border-radius: 0 0 5px 5px;
+}
+
+.status-filter-form > p {
+    display: inline-block;
 }
 
 .bg-lightblue {

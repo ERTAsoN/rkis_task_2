@@ -1,4 +1,5 @@
 from cProfile import label
+from dataclasses import fields
 
 from django import forms
 from django.core.exceptions import ValidationError
@@ -100,3 +101,37 @@ class CreateApplicationForm(forms.ModelForm):
             app.save()
             self.save_m2m()
         return app
+
+
+class EditAppForm(forms.ModelForm):
+    design_comment = forms.CharField(required=False, max_length=200, label='', widget=forms.Textarea(attrs={'placeholder': 'Комментарий'}))
+    design_photo = forms.FileField(required=False, label='Изображение дизайна', validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'bmp'])])
+
+    class Meta:
+        model = DesignApplication
+        fields = ['category', 'status', 'design_comment', 'design_photo']
+        widgets = { 'category': forms.CheckboxSelectMultiple(), }
+
+    def clean_design_comment(self):
+        new_status = self.cleaned_data.get('status')
+        design_comment = self.cleaned_data.get('design_comment')
+        if new_status == 'w' and not design_comment:
+            raise ValidationError('Комментарий должен быть заполнен.')
+        return design_comment
+
+    def clean_design_photo(self):
+        new_status = self.cleaned_data.get('status')
+        design_photo = self.cleaned_data.get('design_photo')
+        if new_status == 'd' and not design_photo:
+            raise ValidationError('Изображение должно быть заполнено.')
+        return design_photo
+
+class AppFilterForm(forms.Form):
+    STATUS_CHOICES = [
+        ('', 'Все'),
+        ('n', 'Новая'),
+        ('w', 'Принято в работу'),
+        ('d', 'Выполнено'),
+    ]
+
+    status = forms.ChoiceField(choices=STATUS_CHOICES, required=False, label='Статус')

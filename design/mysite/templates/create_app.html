@@ -6,7 +6,7 @@
 <form method="post" novalidate enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Создать</button>
+    <button type="submit" class="btn btn-primary font-weight-bold">Создать</button>
 </form>
 
 {% endblock %}
