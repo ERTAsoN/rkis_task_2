@@ -33,7 +33,7 @@ class DesignApplication(models.Model):
     discount = models.IntegerField(verbose_name='Скидка', default=0)
     payment_confirmed = models.BooleanField(verbose_name='Оплата произведена', default=False)
 
-    design_comment = models.TextField(max_length=1000, verbose_name='Комментарий', default='')
+    design_comment = models.TextField(max_length=1000, verbose_name='Комментарий', blank=True)
     design_photo = models.FileField(verbose_name='Изображение дизайна', blank=True)
 
     APP_STATUS = (

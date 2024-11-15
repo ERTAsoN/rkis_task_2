@@ -32,17 +32,21 @@
             const optionField = document.getElementById('id_status');
             const commentField = document.querySelector('p:has(#id_design_comment)');
             const photoField = document.querySelector('p:has(#id_design_photo)');
+            const discountField = document.querySelector('p:has(#id_discount)');
 
             function toggleAdditionalFields() {
                 if (optionField.value === "w") {
                     commentField.style.display = "block";
                     photoField.style.display = "none";
+                    discountField.style.display = "none";
                 }
                 else if (optionField.value === "d") {
                     photoField.style.display = "block";
                     commentField.style.display = "none";
+                    discountField.style.display = "block";
                 }
                 else {
+                    discountField.style.display = "none";
                     commentField.style.display = "none";
                     photoField.style.display = "none";
                 }

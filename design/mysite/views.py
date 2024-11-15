@@ -67,7 +67,9 @@ class AccountListView(LoginRequiredMixin, generic.ListView):
         status = self.request.GET.get('status')
 
         if status:
-            queryset = queryset.filter(status=status).order_by('-time_created')
+            queryset = queryset.filter(status=status)
+
+        queryset = queryset.order_by('-time_created')
 
         return queryset
 

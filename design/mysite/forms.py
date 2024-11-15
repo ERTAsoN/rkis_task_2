@@ -110,7 +110,7 @@ class EditAppForm(forms.ModelForm):
 
     class Meta:
         model = DesignApplication
-        fields = ['category', 'status', 'design_comment', 'design_photo']
+        fields = ['category', 'status', 'discount', 'design_comment', 'design_photo']
         widgets = { 'category': forms.CheckboxSelectMultiple(), }
 
     def clean_design_comment(self):
@@ -126,6 +126,13 @@ class EditAppForm(forms.ModelForm):
         if new_status == 'd' and not design_photo:
             raise ValidationError('Изображение должно быть заполнено.')
         return design_photo
+
+    def clean_discount(self):
+        discount = self.cleaned_data.get('discount')
+        new_status = self.cleaned_data.get('status')
+        if new_status == 'd':
+            return discount
+        return 0
 
 class AppFilterForm(forms.Form):
     STATUS_CHOICES = [

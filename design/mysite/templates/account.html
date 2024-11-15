@@ -18,7 +18,10 @@
                         <p class="mb-2 h5 text-center">{{app.title}}</p>
                         <p class="text-secondary mt-1 mb-1">{{ app.time_created_f }}</p>
                         <p class="text-white mb-0 app-display-category text-truncate">{{ app.get_categories }}</p>
-                        <p class="text-white mb-0 app-display-price">{{ app.get_price }} ₽</p>
+                        <p class="text-white mb-0 app-display-price d-inline">{{ app.get_price }} ₽</p>
+                        {% if app.discount != 0 %}
+                            <p class="text-white mb-0 app-display-price d-inline bg-primary">-{{ app.discount }}%</p>
+                        {% endif %}
                         <p class="text-secondary mt-1 mb-1 app-desc">{{ app.description }}</p>
                     </div>
                     <div>

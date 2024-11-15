@@ -151,7 +151,7 @@ h3 {
 }
 
 p:has(#id_discount) {
-    display: inline;
+    display: block;
 }
 
 p:has(#id_discount)::after {
