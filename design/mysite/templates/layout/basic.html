@@ -27,7 +27,8 @@
                         <li><a href="{% url 'create_app' %}">Создать заявку</a></li>
                         {% if perms.mysite.can_edit_status %}
                             <li class="mt-4">Админ</li>
-                            <li><a href="{% url 'all_apps' %}">Работа с заявками</a></li>
+                            <li><a href="{% url 'all_apps' %}">Заявки</a></li>
+                            <li><a href="{% url 'all_categories' %}">Категории</a></li>
                         {% endif %}
                     {% else %}
                         <li class="mt-4"><a href="{% url 'login' %}">Войти</a></li>

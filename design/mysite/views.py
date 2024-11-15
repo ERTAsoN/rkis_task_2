@@ -6,11 +6,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
-from django.views.generic import DeleteView, UpdateView
+from django.views.generic import DeleteView, UpdateView, CreateView
 
 from django import forms
 from .forms import RegistrationForm, LoginForm, CreateApplicationForm, EditAppForm, AppFilterForm
-from .models import DesignApplication
+from .models import DesignApplication, Category
 
 
 def login_user(request):
@@ -96,10 +96,27 @@ class AllAppsListView(generic.ListView, PermissionRequiredMixin):
     def get_queryset(self):
         return DesignApplication.objects.all().order_by('-time_created')
 
+class AllCategoriesListView(generic.ListView, PermissionRequiredMixin):
+    permission_required = 'mysite.can_edit_status'
+    model = Category
+    template_name = 'all_categories.html'
+
+    def get_queryset(self):
+        return Category.objects.all().order_by('id')
+
 class AppDelete(DeleteView, LoginRequiredMixin):
     model = DesignApplication
     success_url = reverse_lazy('account')
     template_name = 'delete_app.html'
+
+    def get_queryset(self):
+        return super().get_queryset()
+
+class CategoryDelete(DeleteView, PermissionRequiredMixin):
+    permission_required = 'mysite.can_edit_status'
+    model = Category
+    success_url = reverse_lazy('all_categories')
+    template_name = 'delete_category.html'
 
     def get_queryset(self):
         return super().get_queryset()
@@ -111,3 +128,19 @@ class EditApp(UpdateView, PermissionRequiredMixin):
     form_class = EditAppForm
 
     success_url = reverse_lazy('all_apps')
+
+class EditCategory(UpdateView, PermissionRequiredMixin):
+    permission_required = 'mysite.can_edit_status'
+    model = Category
+    template_name = 'edit_category.html'
+    fields = ['title', 'price']
+
+    success_url = reverse_lazy('all_categories')
+
+class CreateCategory(CreateView, PermissionRequiredMixin):
+    permission_required = 'mysite.can_edit_status'
+    model = Category
+    template_name = 'create_category.html'
+    fields = ['title', 'price']
+
+    success_url = reverse_lazy('all_categories')

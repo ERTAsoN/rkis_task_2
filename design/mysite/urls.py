@@ -1,6 +1,7 @@
 from django.urls import path
 
-from .views import register, logout_user, login_user, create_application, AccountListView, HomepageListView, AppDelete, AllAppsListView, EditApp
+from .views import register, logout_user, login_user, create_application, AccountListView, HomepageListView, AppDelete, \
+    AllAppsListView, EditApp, AllCategoriesListView, EditCategory, CategoryDelete, CreateCategory
 
 urlpatterns = [
     path('', HomepageListView.as_view(), name='index'),
@@ -9,7 +10,11 @@ urlpatterns = [
     path('login/', login_user, name='login'),
     path('create/', create_application, name='create_app'),
     path('all-apps/', AllAppsListView.as_view(), name='all_apps'),
+    path('all-categories/', AllCategoriesListView.as_view(), name='all_categories'),
     path('account/', AccountListView.as_view(), name='account'),
     path('app/<int:pk>/delete/', AppDelete.as_view(), name='app_delete'),
     path('app/<int:pk>/edit/', EditApp.as_view(), name='app_edit'),
+    path('category/<int:pk>/edit/', EditCategory.as_view(), name='edit_category'),
+    path('category/<int:pk>/delete/', CategoryDelete.as_view(), name='delete_category'),
+    path('category/create/', CreateCategory.as_view(), name='create_category'),
 ]
