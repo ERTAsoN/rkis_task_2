@@ -110,7 +110,7 @@ class EditAppForm(forms.ModelForm):
 
     class Meta:
         model = DesignApplication
-        fields = ['category', 'status', 'discount', 'design_comment', 'design_photo']
+        fields = ['status', 'discount', 'design_comment', 'design_photo']
         widgets = { 'category': forms.CheckboxSelectMultiple(), }
 
     def clean_design_comment(self):
