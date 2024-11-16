@@ -24,17 +24,17 @@ form > p > input[type=text], input[type=password], textarea {
     background-color: #dadada;
 }
 
-p:has(#id_consent) {
+p:has(#id_consent), p:has(#id_payment_confirmed) {
     display: flex;
     align-items: center;
 }
 
-label[for="id_consent"] {
+label[for="id_consent"], label[for="id_payment_confirmed"] {
     margin-bottom: 0;
     margin-right: 5px;
 }
 
-#id_consent {
+#id_consent, #id_payment_confirmed {
     width: 17px;
     height: 17px;
 }
@@ -76,6 +76,10 @@ h3 {
     height: 370px;
 }
 
+.app-display-card-edit {
+    height: 410px;
+}
+
 .app-display-img {
     width: 280px;
     height: 250px;
@@ -85,15 +89,6 @@ h3 {
 
 .app-display-img-index {
     border-radius: 5px;
-}
-
-button, .button {
-    border: none;
-    border-radius: 5px;
-    background-color: dodgerblue;
-    color: white;
-    padding: 5px 10px 5px 10px;
-    font-weight: bold;
 }
 
 .app-desc {
@@ -151,14 +146,19 @@ button, .button {
     border-radius: 0 0 5px 5px;
 }
 
-.bg-lightblue {
-    background-color: cornflowerblue;
+.status-filter-form > p {
+    display: inline-block;
+}
+
+p:has(#id_discount) {
+    display: block;
+}
+
+p:has(#id_discount)::after {
+    content: "%";
+    display: inline;
 }
 
 .bg-yellow {
     background-color: #ffbd2e;
-}
-
-.bg-green {
-    background-color: #8ada40;
 }

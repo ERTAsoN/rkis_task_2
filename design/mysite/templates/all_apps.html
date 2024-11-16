@@ -2,15 +2,9 @@
 
 {% block content %}
 
-<h3>Личный кабинет</h3>
+<h3>Заявки</h3>
     {% if designapplication_list %}
-        <p class="h5 mt-4">Ваши заявки</p>
         <hr>
-        <form method="get" class="status-filter-form">
-            {% csrf_token %}
-            {{ filter_form.as_p }}
-            <button type="submit">Применить</button>
-        </form>
         <div class="app-display p-2">
             {% for app in designapplication_list %}
                 <div class="app-display-card">
@@ -36,14 +30,18 @@
                         ">{{ app.get_status_display }}</p>
                     </div>
                     {% if app.status == 'n' %}
-                        <a href="{% url 'app_delete' app.id %}" class="btn btn-danger font-weight-bold">Удалить</a>
-                    {% else %}
+                        <a href="{% url 'app_edit' app.id %}" class="btn btn-primary font-weight-bold">Редактировать</a>
+                    {% elif app.status == 'w' %}
                         <p class="btn btn-secondary font-weight-bold mb-0">В работе</p>
+                    {% elif not app.payment_confirmed %}
+                        <a href="{% url 'app_edit_done' app.id %}" class="btn btn-success font-weight-bold">Подтвердить</a>
+                    {% else %}
+                        <p class="btn btn-secondary font-weight-bold mb-0">Выполнено</p>
                     {% endif %}
                 </div>
             {% endfor %}
         </div>
     {% else %}
-      <p>У вас нет заявок.</p>
+      <p>В базе нет заявок.</p>
     {% endif %}
 {% endblock %}
