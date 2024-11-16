@@ -24,17 +24,17 @@ form > p > input[type=text], input[type=password], textarea {
     background-color: #dadada;
 }
 
-p:has(#id_consent) {
+p:has(#id_consent), p:has(#id_payment_confirmed) {
     display: flex;
     align-items: center;
 }
 
-label[for="id_consent"] {
+label[for="id_consent"], label[for="id_payment_confirmed"] {
     margin-bottom: 0;
     margin-right: 5px;
 }
 
-#id_consent {
+#id_consent, #id_payment_confirmed {
     width: 17px;
     height: 17px;
 }
@@ -159,14 +159,6 @@ p:has(#id_discount)::after {
     display: inline;
 }
 
-.bg-lightblue {
-    background-color: cornflowerblue;
-}
-
 .bg-yellow {
     background-color: #ffbd2e;
-}
-
-.bg-green {
-    background-color: #8ada40;
 }

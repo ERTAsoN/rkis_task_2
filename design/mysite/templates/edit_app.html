@@ -14,9 +14,9 @@
                 <img src="{{ object.photo.url }}" alt="{{ object.title }}" class="app-display-img"/>
             {% endif %}
             <p class="text-white app-status mt-0 mb-0
-            {% if object.status == 'n' %} bg-lightblue
+            {% if object.status == 'n' %} bg-primary
             {% elif object.status == 'w' %} bg-yellow
-            {% else %} bg-green
+            {% else %} bg-success
             {% endif %}
             ">{{ object.get_status_display }}</p>
         </div>

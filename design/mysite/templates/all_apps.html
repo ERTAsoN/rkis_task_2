@@ -23,16 +23,20 @@
                             <img src="{{ app.photo.url }}" alt="{{ app.title }}" class="app-display-img"/>
                         {% endif %}
                         <p class="text-white app-status mt-0
-                        {% if app.status == 'n' %} bg-lightblue
+                        {% if app.status == 'n' %} bg-primary
                         {% elif app.status == 'w' %} bg-yellow
-                        {% else %} bg-green
+                        {% else %} bg-success
                         {% endif %}
                         ">{{ app.get_status_display }}</p>
                     </div>
                     {% if app.status == 'n' %}
                         <a href="{% url 'app_edit' app.id %}" class="btn btn-primary font-weight-bold">Редактировать</a>
-                    {% else %}
+                    {% elif app.status == 'w' %}
                         <p class="btn btn-secondary font-weight-bold mb-0">В работе</p>
+                    {% elif not app.payment_confirmed %}
+                        <a href="{% url 'app_edit_done' app.id %}" class="btn btn-success font-weight-bold">Подтвердить</a>
+                    {% else %}
+                        <p class="btn btn-secondary font-weight-bold mb-0">Выполнено</p>
                     {% endif %}
                 </div>
             {% endfor %}

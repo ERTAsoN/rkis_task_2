@@ -131,6 +131,14 @@ class EditApp(UpdateView, PermissionRequiredMixin):
 
     success_url = reverse_lazy('all_apps')
 
+class EditAppDone(UpdateView, PermissionRequiredMixin):
+    permission_required = 'mysite.can_edit_status'
+    model = DesignApplication
+    template_name = 'edit_app_done.html'
+    fields = ['payment_confirmed']
+
+    success_url = reverse_lazy('all_apps')
+
 class EditCategory(UpdateView, PermissionRequiredMixin):
     permission_required = 'mysite.can_edit_status'
     model = Category
