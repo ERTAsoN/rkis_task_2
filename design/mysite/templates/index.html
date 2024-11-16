@@ -4,5 +4,23 @@
 
 <h1>Design Pro</h1>
 <p>Дизайн интерьеров под любой вкус</p>
-
+<p class="h5">Заявок в работе: {{ apps_in_process }}</p>
+    {% if designapplication_list %}
+        <p class="h5 mt-4">Последние выполненные заявки</p>
+        <hr>
+        <div class="app-display p-2">
+            {% for app in designapplication_list %}
+                <div class="app-display-card app-display-card-index">
+                    <div>
+                        <p class="mb-2 h5 text-center">{{app.title}}</p>
+                        <p class="text-secondary mt-1 mb-1">{{ app.time_created_f }}</p>
+                        <p class="text-white mb-1 app-display-category text-truncate">{{ app.get_category }}</p>
+                    </div>
+                    {% if app.photo %}
+                        <img src="{{ app.photo.url }}" alt="{{ app.title }}" class="app-display-img app-display-img-index"/>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block content %}
 
 <h3>Регистрация</h3>
-<form method="post">
+<form method="post" autocomplete="off" novalidate>
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Зарегистрироваться</button>

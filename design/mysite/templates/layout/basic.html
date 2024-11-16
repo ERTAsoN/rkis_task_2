@@ -10,6 +10,7 @@
 
       {% load static %}
       <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+      <script src="{% static 'script/script.js' %}"></script>
   </head>
 
   <body>
@@ -22,6 +23,8 @@
                   {% if user.is_authenticated %}
                     <li class="mt-4">Аккаунт: <span class="text-secondary">{{ user.get_username }}</span></li>
                     <li><a href="{% url 'logout'%}">Выйти</a></li>
+                    <li><a href="{% url 'account'%}">Личный кабинет</a></li>
+                    <li><a href="{% url 'create_app'%}">Создать заявку</a></li>
                   {% else %}
                     <li class="mt-4"><a href="{% url 'login'%}">Войти</a></li>
                     <li><a href="{% url 'register'%}">Регистрация</a></li>
